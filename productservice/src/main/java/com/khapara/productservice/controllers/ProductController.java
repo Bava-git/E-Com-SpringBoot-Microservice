@@ -5,6 +5,7 @@ import com.khapara.productservice.dtos.ProductDTO;
 import com.khapara.productservice.entities.Product;
 import com.khapara.productservice.services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,8 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
 
+    @Autowired
     private ProductService productSer;
-
-    public ProductController(ProductService productSer) {
-        this.productSer = productSer;
-    }
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> listProducts() {

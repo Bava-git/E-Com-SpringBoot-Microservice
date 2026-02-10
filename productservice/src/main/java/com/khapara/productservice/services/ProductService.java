@@ -8,6 +8,7 @@ import com.khapara.productservice.exception.ResourceNotFoundException;
 import com.khapara.productservice.mappers.ProductMapper;
 import com.khapara.productservice.repositories.ProductRepository;
 import com.khapara.productservice.repositories.ProductReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +18,10 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRep;
-    private final ProductReviewRepository productReviewRep;
-
-    public ProductService(ProductRepository productRep, ProductReviewRepository productReviewRep) {
-        this.productRep = productRep;
-        this.productReviewRep = productReviewRep;
-    }
+    @Autowired
+    private ProductRepository productRep;
+    @Autowired
+    private ProductReviewRepository productReviewRep;
 
     public ProductDTO oneProduct(Long id) {
         Product product = productRep.findById(id)
