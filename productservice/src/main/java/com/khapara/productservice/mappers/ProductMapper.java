@@ -2,9 +2,7 @@ package com.khapara.productservice.mappers;
 
 import com.khapara.productservice.dtos.*;
 import com.khapara.productservice.entities.*;
-import com.khapara.productservice.repositories.ProductReviewRepository;
 import com.khapara.productservice.utilities.SlugUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,13 +174,17 @@ public class ProductMapper {
             // ✅ Products with sizes → one DTO per size
             for (ProductSize size : product.getSizes()) {
                 HomeScreenProductDTO dto = buildBaseDTO(product);
-                dto.setProductSizeLabel(size.getProductSizeLabel());
+                ProductSizeDTO productSizeDTO = new ProductSizeDTO();
+                productSizeDTO.setId(size.getId());
+                productSizeDTO.setProductSizeLabel(size.getProductSizeLabel());
+                productSizeDTO.setProductSizeCode(size.getProductSizeCode());
+                dto.setSize(productSizeDTO);
                 dtos.add(dto);
             }
         } else {
             // ✅ Products without sizes → single DTO with null/empty size
             HomeScreenProductDTO dto = buildBaseDTO(product);
-            dto.setProductSizeLabel(null); // or "N/A"
+            dto.setSize(null); // or "N/A"
             dtos.add(dto);
         }
 
@@ -204,6 +206,7 @@ public class ProductMapper {
             List<ProductImageDTO> imageDTOs = product.getImages().stream()
                     .map(img -> {
                         ProductImageDTO imgDto = new ProductImageDTO();
+                        imgDto.setId(img.getId());
                         imgDto.setProductImageHref(img.getProductImageHref());
                         imgDto.setProductImageAlt(img.getProductImageAlt());
                         return imgDto;

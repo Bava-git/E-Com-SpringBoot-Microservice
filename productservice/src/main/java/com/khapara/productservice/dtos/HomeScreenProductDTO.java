@@ -10,9 +10,9 @@ public class HomeScreenProductDTO {
     private String groupId;
     private String productName;
     private String slug;
-    private List<ProductImageDTO> images;
-    private Double productPrice;
     private String productColorName;
-    private String productSizeLabel;
+    private Double productPrice;
+    private List<ProductImageDTO> images;
+    private ProductSizeDTO size;
 }
 
