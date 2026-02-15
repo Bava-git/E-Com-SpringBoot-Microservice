@@ -53,7 +53,8 @@ public class CartService {
             if (productDTO.getSizes().isEmpty()) {
                 cart.setSizeId(null);
             }
-            return CartMapper.toDto(cartRep.save(cart));
+            cart = cartRep.save(cart);
+            return CartMapper.toDto(cart);
         }
 
     }

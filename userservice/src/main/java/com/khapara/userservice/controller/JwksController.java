@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class JwksController {
 
-    @GetMapping("/.well-known/jwks.json")
+    @GetMapping("/public/.well-known/jwks.json")
     public Map<String, Object> getJwks() throws Exception {
         // Load public certificate
         InputStream is = getClass().getResourceAsStream("/jwt_public.cer");

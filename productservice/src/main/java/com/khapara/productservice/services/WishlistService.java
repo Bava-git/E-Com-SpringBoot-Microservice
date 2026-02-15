@@ -51,7 +51,8 @@ public class WishlistService {
         if (product.get().getSizes().isEmpty()) {
             wishList.setProductSizeId(null);
         }
-        return WishlistMapper.toDto(wishlistRep.save(wishList));
+        wishList = wishlistRep.save(wishList);
+        return WishlistMapper.toDto(wishList);
 
     }
 
