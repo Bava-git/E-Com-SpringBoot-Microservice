@@ -2,8 +2,10 @@ package com.khapara.orderservice.mappers;
 
 import com.khapara.orderservice.dtos.CartDTO;
 import com.khapara.orderservice.dtos.CartScreenDTO;
+import com.khapara.orderservice.dtos.UpdateQuantityDTO;
 import com.khapara.orderservice.entities.Cart;
 import com.khapara.productservice.dtos.ProductDTO;
+import com.khapara.productservice.dtos.ProductSizeDTO;
 
 public class CartMapper {
 
@@ -46,11 +48,28 @@ public class CartMapper {
         dto.setColor(productDTO.getProductColorName());
         dto.setQuantity(cart.getQuantity());
 
-        if (productDTO.getSizes().isEmpty()) {
-            dto.setSize(null);
+        if (productDTO.getSizes() != null && !productDTO.getSizes().isEmpty()) {
+            dto.setSize(
+                    productDTO.getSizes().stream()
+                            .filter(size -> size.getId().equals(cart.getSizeId()))
+                            .map(ProductSizeDTO::getProductSizeLabel)
+                            .findFirst()
+                            .orElse(null)
+            );
         } else {
-            dto.setSize(productDTO.getSizes().get(Math.toIntExact(cart.getSizeId())).getProductSizeLabel());
+            dto.setSize(null);
         }
+
+        return dto;
+    }
+
+    public static UpdateQuantityDTO toUpdateQuantity(CartDTO cartDTO) {
+        if (cartDTO == null) return null;
+
+        UpdateQuantityDTO dto = new UpdateQuantityDTO();
+        dto.setId(cartDTO.getId());
+        dto.setQuantity(cartDTO.getQuantity());
+        dto.setUserId(cartDTO.getUserId());
 
         return dto;
     }

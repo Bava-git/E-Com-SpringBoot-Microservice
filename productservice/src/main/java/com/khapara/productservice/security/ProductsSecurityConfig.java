@@ -26,9 +26,9 @@ public class ProductsSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/products/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        .requestMatchers("/products/public/**").permitAll()
+                        .requestMatchers("/products/private/**").hasRole("ADMIN")
+                        .requestMatchers("/products/wishlist/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 ->
@@ -37,13 +37,6 @@ public class ProductsSecurityConfig {
                                 .authenticationEntryPoint(customAuthEntryPoint())
                 );
         return http.build();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(HttpMethod.GET, "/products/**")
-                .requestMatchers("/actuator/**");
     }
 
     @Bean
@@ -57,7 +50,6 @@ public class ProductsSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
     @Bean
     public AuthenticationEntryPoint customAuthEntryPoint() {

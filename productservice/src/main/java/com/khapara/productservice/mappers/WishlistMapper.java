@@ -3,6 +3,7 @@ package com.khapara.productservice.mappers;
 import com.khapara.productservice.dtos.WishlistDTO;
 import com.khapara.productservice.dtos.WishlistScreenDTO;
 import com.khapara.productservice.entities.Product;
+import com.khapara.productservice.entities.ProductSize;
 import com.khapara.productservice.entities.WishList;
 
 public class WishlistMapper {
@@ -43,10 +44,16 @@ public class WishlistMapper {
         dto.setImage(product.getImages().getFirst().getProductImageHref());
         dto.setColor(product.getProductColorName());
 
-        if (product.getSizes().isEmpty()) {
-            dto.setSize(null);
+        if (product.getSizes() != null && !product.getSizes().isEmpty()) {
+            dto.setSize(
+                    product.getSizes().stream()
+                            .filter(size -> size.getId().equals(wishList.getProductSizeId()))
+                            .map(ProductSize::getProductSizeLabel)
+                            .findFirst()
+                            .orElse(null)
+            );
         } else {
-            dto.setSize(product.getSizes().get(Math.toIntExact(wishList.getProductSizeId())).getProductSizeLabel());
+            dto.setSize(null);
         }
 
         return dto;

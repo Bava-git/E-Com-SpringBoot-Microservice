@@ -37,6 +37,10 @@ public class WishlistService {
                 .toList();
     }
 
+    public long getCountWishlist(Long userId) {
+        return wishlistRep.countByUserId(userId);
+    }
+
     public WishlistDTO saveWishlist(WishlistDTO wishlistDTO) {
 
         Optional<WishList> isAvailable = wishlistRep.findByProductIdAndUserId(wishlistDTO.getProductId(),

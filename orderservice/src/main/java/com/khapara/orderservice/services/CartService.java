@@ -1,8 +1,7 @@
 package com.khapara.orderservice.services;
 
 import com.khapara.orderservice.clients.ProductClient;
-import com.khapara.orderservice.dtos.CartDTO;
-import com.khapara.orderservice.dtos.CartScreenDTO;
+import com.khapara.orderservice.dtos.*;
 import com.khapara.orderservice.entities.Cart;
 import com.khapara.orderservice.exception.ResourceNotFoundException;
 import com.khapara.orderservice.mappers.CartMapper;
@@ -26,8 +25,8 @@ public class CartService {
         this.productClient = productClient;
     }
 
-    public List<CartScreenDTO> listCartByUserid(Long userId) {
-        return cartRep.findByUserId(userId)
+    public CartItemAndPriceDTO listCartByUserid(Long userId) {
+        List<CartScreenDTO> cartScreenDTOS = cartRep.findByUserId(userId)
                 .stream()
                 .map(cartItem ->
                         {
@@ -36,6 +35,18 @@ public class CartService {
                         }
                 )
                 .toList();
+        OrderPricesDTO orderPricesDTO = calculateOrderPrices(cartScreenDTOS);
+
+        CartItemAndPriceDTO cartItemAndPriceDTO = new CartItemAndPriceDTO();
+        cartItemAndPriceDTO.setCartItems(cartScreenDTOS);
+        cartItemAndPriceDTO.setOrderPrices(orderPricesDTO);
+
+        return cartItemAndPriceDTO;
+
+    }
+
+    public long getCountCart(Long userId) {
+        return cartRep.countByUserId(userId);
     }
 
     public CartDTO saveCart(CartDTO cartDTO) {
@@ -44,9 +55,10 @@ public class CartService {
                 cartDTO.getUserId());
 
         if (isAvailable.isPresent()) {
-            isAvailable.get().setQuantity(cartDTO.getQuantity());
-            isAvailable.get().setSizeId(cartDTO.getSizeId());
-            return CartMapper.toDto(cartRep.save(isAvailable.get()));
+            if (isAvailable.get().getQuantity() != cartDTO.getQuantity()) {
+                return updateQuantity(CartMapper.toUpdateQuantity(cartDTO));
+            }
+            return null;
         } else {
             ProductDTO productDTO = productClient.getProduct(cartDTO.getProductId());
             Cart cart = CartMapper.toEntity(cartDTO);
@@ -59,10 +71,30 @@ public class CartService {
 
     }
 
+    public CartDTO updateQuantity(UpdateQuantityDTO updateQuantityDTO) {
+        Cart cart = cartRep.findByIdAndUserId(updateQuantityDTO.getId(), updateQuantityDTO.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+        cart.setQuantity(updateQuantityDTO.getQuantity());
+        cartRep.save(cart);
+        return CartMapper.toDto(cart);
+    }
+
     public void removeProductFromCart(Long id, Long userId) {
         Cart cart = cartRep.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found with ID: " + id + " User id: " + userId));
         cartRep.delete(cart);
+    }
+
+    public OrderPricesDTO calculateOrderPrices(List<CartScreenDTO> cartScreenDTOS) {
+        double subtotal = cartScreenDTOS.stream()
+                .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                .sum();
+
+        double deliveryFee = (subtotal > 100 || subtotal == 0) ? 0 : 40;
+        double marketPlaceFee = (subtotal == 0) ? 0 : 5;
+        double total = Math.round(subtotal + deliveryFee + marketPlaceFee);
+
+        return new OrderPricesDTO(subtotal, deliveryFee, marketPlaceFee, total);
     }
 
 

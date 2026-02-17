@@ -20,48 +20,48 @@ public class ProductController {
     @Autowired
     private ProductService productSer;
 
-    @GetMapping
+    @GetMapping("/public")
     public ResponseEntity<List<ProductDTO>> listProducts() {
         List<ProductDTO> products = productSer.listProducts();
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/by-id/{id}")
+    @GetMapping("/public/by-id/{id}")
     public ResponseEntity<ProductDTO> oneProduct(@PathVariable Long id) {
         ProductDTO dto = productSer.oneProduct(id);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/by-groupId/{groupId}")
+    @GetMapping("/public/by-groupId/{groupId}")
     public ResponseEntity<List<ProductDTO>> filterProductByGroupId(@PathVariable String groupId) {
         List<ProductDTO> products = productSer.filterProductByGroupId(groupId);
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/by-slug/{slug}")
+    @GetMapping("/public/by-slug/{slug}")
     public ResponseEntity<List<ProductDTO>> filterProductBySlug(@PathVariable String slug) {
         List<ProductDTO> products = productSer.filterProductBySlug(slug);
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/forHome")
+    @GetMapping("/public/forHome")
     public ResponseEntity<List<HomeScreenProductDTO>> getHomeScreenProducts() {
         return ResponseEntity.ok(productSer.getProductsForHomeScreen());
     }
 
-    @PostMapping
+    @PostMapping("/private")
     public ResponseEntity<ProductDTO> saveProduct(@Valid @RequestBody ProductDTO addProductDTO) {
         ProductDTO productDTO = productSer.saveProduct(addProductDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
     }
 
-    @PostMapping("/bulk")
+    @PostMapping("/private/bulk")
     public ResponseEntity<List<ProductDTO>> saveMultipleProducts(@Valid @RequestBody List<ProductDTO> productDTOS) {
         List<ProductDTO> responseDtos = productSer.saveMultipleProducts(productDTOS);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDtos);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/private/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productSer.deleteProduct(id);
         return ResponseEntity.noContent().build();

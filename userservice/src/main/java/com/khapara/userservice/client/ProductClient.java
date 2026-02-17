@@ -1,6 +1,5 @@
-package com.khapara.orderservice.clients;
+package com.khapara.userservice.client;
 
-import com.khapara.productservice.dtos.ProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "PRODUCT-SERVICE")
 public interface ProductClient {
 
-    @GetMapping("/products/public/by-id/{id}")
-    ProductDTO getProduct(@PathVariable("id") Long id);
+    @GetMapping("/products/wishlist/{userId}/count")
+    Long getWishlistCount(@PathVariable("userId") Long userId);
 
 }

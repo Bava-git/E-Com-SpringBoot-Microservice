@@ -1,12 +1,14 @@
 package com.khapara.userservice.security;
 
+import com.khapara.userservice.entity.User;
+import com.khapara.userservice.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -24,9 +26,11 @@ public class JwtUtil {
     private long expirationTime;
 
     private final KeyProvider keyProvider;
+    private final UserRepository userRep;
 
-    public JwtUtil(KeyProvider keyProvider) {
+    public JwtUtil(KeyProvider keyProvider, UserRepository userRep) {
         this.keyProvider = keyProvider;
+        this.userRep = userRep;
     }
 
     private SecretKey getSigningKey() {
@@ -35,11 +39,16 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) throws Exception {
+
+        User user = userRep.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
         String token = Jwts.builder()
                 .header()
                 .add("kid", "jwtkey")
                 .and()
                 .subject(userDetails.getUsername())
+                .claim("userId", user.getId())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(keyProvider.getPrivateKey(), Jwts.SIG.RS256)
