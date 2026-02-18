@@ -1,16 +1,16 @@
 package com.khapara.userservice.mapper;
 
-import com.khapara.userservice.dto.ReqShippingAddressDTO;
-import com.khapara.userservice.dto.ResShippingAddressDTO;
+import com.khapara.userservice.dto.ShipAddDTO;
 import com.khapara.userservice.entity.ShippingAddress;
 
-public class ShippingAddressMapper {
+public class ShipAddMapper {
 
-    public static ShippingAddress toEntity(ReqShippingAddressDTO addressDTO) {
+    public static ShippingAddress toEntity(ShipAddDTO addressDTO) {
         if (addressDTO == null) return null;
 
         ShippingAddress address = new ShippingAddress();
 
+        address.setId(addressDTO.getId());
         address.setFullName(addressDTO.getFullName());
         address.setDoorNumber(addressDTO.getDoorNumber());
         address.setStreetName(addressDTO.getStreetName());
@@ -23,23 +23,21 @@ public class ShippingAddressMapper {
         address.setAddressLabel(addressDTO.getAddressLabel());
         address.setUserId(addressDTO.getUserId());
 
-        return address;
+         return address;
     }
 
-    public static ResShippingAddressDTO toDto(ShippingAddress address) {
+    public static ShipAddDTO toDto(ShippingAddress address) {
         if (address == null) return null;
 
-        ResShippingAddressDTO addressDTO = new ResShippingAddressDTO();
+        ShipAddDTO addressDTO = new ShipAddDTO();
 
         addressDTO.setId(address.getId());
-        addressDTO.setConsigneeName(address.getFullName());
-        StringBuilder builder = new StringBuilder();
-        builder.append(address.getDoorNumber())
-                .append(", ").append(address.getStreetName())
-                .append(", ").append(address.getCity())
-                .append(", ").append(address.getState())
-                .append(" - ").append(address.getZipcode());
-        addressDTO.setFullAddress(builder.toString());
+        addressDTO.setFullName(address.getFullName());
+        addressDTO.setDoorNumber(address.getDoorNumber());
+        addressDTO.setStreetName(address.getStreetName());
+        addressDTO.setCity(address.getCity());
+        addressDTO.setState(address.getState());
+        addressDTO.setZipcode(address.getZipcode());
         addressDTO.setNearByLandmark(address.getNearByLandmark());
         addressDTO.setAlternateEmail((address.getAlternateEmail() == null || address.getAlternateEmail().isEmpty()) ? null : address.getAlternateEmail());
         addressDTO.setAlternatePhoneNumber((address.getAlternatePhoneNumber() == null || address.getAlternatePhoneNumber().isEmpty()) ? null : address.getAlternatePhoneNumber());

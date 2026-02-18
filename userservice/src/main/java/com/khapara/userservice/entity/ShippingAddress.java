@@ -43,12 +43,12 @@ public class ShippingAddress {
     @Size(min = 1, max = 200, message = "nearByLandmark 200 characters limited")
     private String nearByLandmark;
 
+    @Column(nullable = true)
     @Email
-    @Column(nullable = false)
     @Size(max = 200, message = "alternateEmail 200 characters limited")
     private String alternateEmail;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Size(min = 10, max = 15, message = "alternatePhoneNumber b/w 10 to 15 characters limited")
     @Pattern(regexp = "\\d+")
     private String alternatePhoneNumber;
