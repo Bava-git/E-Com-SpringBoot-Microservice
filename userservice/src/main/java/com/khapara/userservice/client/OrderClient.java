@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface OrderClient {
 
     @GetMapping("/order/cart/{userId}/count")
-    Long getCartCount(@PathVariable("userId") Long userId);
+    Long getCartCount(@PathVariable Long userId);
 
 
 }

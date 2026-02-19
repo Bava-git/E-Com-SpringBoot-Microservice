@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ProductClient {
 
     @GetMapping("/products/wishlist/{userId}/count")
-    Long getWishlistCount(@PathVariable("userId") Long userId);
+    Long getWishlistCount(@PathVariable Long userId);
 
 }

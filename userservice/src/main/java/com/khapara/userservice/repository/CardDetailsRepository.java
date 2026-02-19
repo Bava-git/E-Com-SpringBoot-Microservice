@@ -1,7 +1,7 @@
-package com.khapara.orderservice.repositories;
+package com.khapara.userservice.repository;
 
-import com.khapara.orderservice.dtos.CardDetailsDTO;
-import com.khapara.orderservice.entities.CardDetails;
+import com.khapara.userservice.dto.CardDetailsDTO;
+import com.khapara.userservice.entity.CardDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

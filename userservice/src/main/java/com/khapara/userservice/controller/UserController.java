@@ -3,6 +3,8 @@ package com.khapara.userservice.controller;
 import com.khapara.userservice.client.OrderClient;
 import com.khapara.userservice.client.ProductClient;
 import com.khapara.userservice.dto.CountDTO;
+import com.khapara.userservice.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +24,11 @@ public class UserController {
     }
 
     @GetMapping("/private/{userId}/count")
-    public ResponseEntity<CountDTO> getCount(@PathVariable Long usedId) {
+    public ResponseEntity<CountDTO> getCount(@PathVariable Long userId) {
 
         CountDTO countDTO = new CountDTO();
-        countDTO.setCartCount(orderClient.getCartCount(usedId));
-        countDTO.setWishlistCount(productClient.getWishlistCount(usedId));
+        countDTO.setCartCount(orderClient.getCartCount(userId));
+        countDTO.setWishlistCount(productClient.getWishlistCount(userId));
         return ResponseEntity.ok(countDTO);
 
     }

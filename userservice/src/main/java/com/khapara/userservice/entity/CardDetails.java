@@ -1,4 +1,4 @@
-package com.khapara.orderservice.entities;
+package com.khapara.userservice.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

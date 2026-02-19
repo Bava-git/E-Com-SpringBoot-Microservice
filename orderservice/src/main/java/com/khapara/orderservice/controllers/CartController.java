@@ -36,7 +36,7 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dtos);
     }
 
-    @PostMapping("/updateQuantity")
+    @PutMapping("/updateQuantity")
     public ResponseEntity<CartDTO> updateQuantity(@RequestBody UpdateQuantityDTO updateQuantityDTO) {
         CartDTO dto = cartSer.updateQuantity(updateQuantityDTO);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
