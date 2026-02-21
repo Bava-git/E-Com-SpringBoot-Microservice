@@ -6,7 +6,6 @@ import lombok.Data;
 public class UpdateDefaultCardDTO {
 
     private Long id;
-    private boolean isDefault;
     private Long userId;
 
 }

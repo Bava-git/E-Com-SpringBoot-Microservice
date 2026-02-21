@@ -1,43 +1,41 @@
 package com.khapara.userservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.khapara.userservice.entity.erum.PaymentType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Data;
-import org.aspectj.lang.annotation.After;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.YearMonth;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class CardDetails {
+public class PaymentMethod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "last 4 Digits is required")
-    @Size(min = 4, max = 10, message = "last 4 Digits exceed b/w 4 to 10 characters")
-    private String last4Digits;
+    // Card details
+    @Size(max = 4, message = "card Last 4 Digits limited b/w 4 to 10 characters")
+    private String cardLast4Digits;
 
-    @NotBlank(message = "card Holder Name is required")
-    @Size(min = 3, max = 10, message = "card Holder Name exceed b/w 3 to 10 characters")
+    @Size(min = 3, max = 20, message = "card Holder Name limited b/w 3 to 20 characters")
     private String cardHolderName;
 
     @Column(nullable = false)
     private LocalDateTime cardExpirationDate;
 
-    private boolean isDefault;
+    //UPI id
+    @Size(max = 30, message = "upi ID limited 30 characters")
+    private String upiId;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
     @Positive
     @NotNull(message = "User id is required")
@@ -46,8 +44,5 @@ public class CardDetails {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
 }

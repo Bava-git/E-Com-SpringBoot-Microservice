@@ -30,9 +30,9 @@ public class CardDetailsController {
     }
 
     @PutMapping("/updateDefault")
-    public ResponseEntity<CardDetailsDTO> updateDefaultCard(@RequestBody UpdateDefaultCardDTO updateDefaultCardDTO) {
-        CardDetailsDTO dto = cardDetailsSer.updateDefaultCard(updateDefaultCardDTO);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+    public ResponseEntity<?> updateDefaultCard(@RequestBody UpdateDefaultCardDTO updateDefaultCardDTO) {
+        cardDetailsSer.updateDefaultCard(updateDefaultCardDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Default card updated");
     }
 
     @DeleteMapping("/{id}/user/{userId}")

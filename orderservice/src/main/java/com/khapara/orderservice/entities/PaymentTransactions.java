@@ -1,10 +1,9 @@
 package com.khapara.orderservice.entities;
 
+import com.khapara.orderservice.entities.erum.PaymentStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,19 +14,26 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class Payment {
+public class PaymentTransactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "payment Type is required")
-    @Size(max = 20, message = "payment Type exceed 20 characters")
-    private String paymentType;
-
     @Positive
     @NotNull(message = "User id is required")
     private Long userId;
+
+    @Positive
+    @NotNull(message = "payment Method Id is required")
+    private Long paymentMethodId;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
+    @Positive
+    @NotNull(message = "Amount is required")
+    private long amount;
 
     @CreatedDate
     @Column(updatable = false)

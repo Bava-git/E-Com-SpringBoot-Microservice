@@ -8,14 +8,13 @@ public class CardDetailsMapper {
     public static CardDetails toEntity(CardDetailsDTO dto) {
         if (dto == null) return null;
 
-        CardDetails cardDetails = CardDetails.builder()
-                .id(dto.getId())
-                .last4Digits(dto.getLast4Digits())
-                .cardHolderName(dto.getCardHolderName())
-                .cardExpirationDate(dto.getCardExpirationDate())
-                .isDefault(dto.isDefault())
-                .userId(dto.getUserId())
-                .build();
+        CardDetails cardDetails = new CardDetails();
+        cardDetails.setId(dto.getId());
+        cardDetails.setLast4Digits(dto.getLast4Digits());
+        cardDetails.setCardHolderName(dto.getCardHolderName());
+        cardDetails.setCardExpirationDate(dto.getCardExpirationDate());
+        cardDetails.setDefault(dto.isDefault());
+        cardDetails.setUserId(dto.getUserId());
 
         return cardDetails;
 
@@ -24,14 +23,13 @@ public class CardDetailsMapper {
     public static CardDetailsDTO toDto(CardDetails cardDetails) {
         if (cardDetails == null) return null;
 
-        CardDetailsDTO dto = CardDetailsDTO.builder()
-                .id(cardDetails.getId())
-                .last4Digits(cardDetails.getLast4Digits())
-                .cardHolderName(cardDetails.getCardHolderName())
-                .cardExpirationDate(cardDetails.getCardExpirationDate())
-                .isDefault(cardDetails.isDefault())
-                .userId(cardDetails.getUserId())
-                .build();
+        CardDetailsDTO dto = new CardDetailsDTO();
+        dto.setId(cardDetails.getId());
+        dto.setLast4Digits(cardDetails.getLast4Digits());
+        dto.setCardHolderName(cardDetails.getCardHolderName());
+        dto.setCardExpirationDate(cardDetails.getCardExpirationDate());
+        dto.setDefault(cardDetails.isDefault());
+        dto.setUserId(cardDetails.getUserId());
 
         return dto;
     }

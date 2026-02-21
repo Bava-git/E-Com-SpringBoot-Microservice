@@ -1,18 +1,17 @@
-package com.khapara.userservice.dto;
+package com.khapara.userservice.dto.payment;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class CardDetailsDTO {
+public class PaymentMethodDTO {
 
-    private Long id;
-    private String last4Digits;
+    private String cardLast4Digits;
     private String cardHolderName;
     private LocalDateTime cardExpirationDate;
-    private boolean isDefault;
+    private String upiId;
+    private String paymentType;
     private Long userId;
-
 
 }

@@ -8,6 +8,7 @@ import com.khapara.userservice.mapper.CardDetailsMapper;
 import com.khapara.userservice.repository.CardDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,10 @@ public class CardDetailsService {
     private CardDetailsRepository cardDetailsRep;
 
     public List<CardDetailsDTO> listCardDetails(Long userId) {
-        return cardDetailsRep.findByUserId(userId);
+        return cardDetailsRep.findByUserId(userId)
+                .stream()
+                .map(CardDetailsMapper::toDto)
+                .toList();
     }
 
     public CardDetailsDTO saveCardDetails(CardDetailsDTO dto) {
@@ -26,12 +30,13 @@ public class CardDetailsService {
         return CardDetailsMapper.toDto(cardDetails);
     }
 
-    public CardDetailsDTO updateDefaultCard(UpdateDefaultCardDTO updateDefaultCardDTO) {
-        CardDetails cardDetails = cardDetailsRep.findByIdAndUserId(updateDefaultCardDTO.getId(), updateDefaultCardDTO.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cart not found with ID: " + updateDefaultCardDTO.getId() + " User id: " + updateDefaultCardDTO.getUserId()));
-        cardDetails.setDefault(updateDefaultCardDTO.isDefault());
-        cardDetailsRep.save(cardDetails);
-        return CardDetailsMapper.toDto(cardDetails);
+    @Transactional
+    public void updateDefaultCard(UpdateDefaultCardDTO updateDefaultCardDTO) {
+        CardDetails card = cardDetailsRep.findByIdAndUserId(updateDefaultCardDTO.getId(), updateDefaultCardDTO.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
+        cardDetailsRep.resetDefaultForUser(updateDefaultCardDTO.getUserId());
+        card.setDefault(true);
+        cardDetailsRep.save(card);
     }
 
     public void removeCard(Long id, Long userId) {
