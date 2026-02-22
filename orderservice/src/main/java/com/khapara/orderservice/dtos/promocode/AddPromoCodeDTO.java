@@ -1,10 +1,10 @@
-package com.khapara.orderservice.dtos;
+package com.khapara.orderservice.dtos.promocode;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 @Data
-public class addPromoCodeDTO {
+public class AddPromoCodeDTO {
 
     private String code;
     private String description;

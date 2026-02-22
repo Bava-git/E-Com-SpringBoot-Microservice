@@ -1,7 +1,7 @@
 package com.khapara.orderservice.services;
 
 import com.khapara.orderservice.clients.ProductClient;
-import com.khapara.orderservice.dtos.*;
+import com.khapara.orderservice.dtos.cart.*;
 import com.khapara.orderservice.entities.Cart;
 import com.khapara.orderservice.exception.ResourceNotFoundException;
 import com.khapara.orderservice.mappers.CartMapper;
@@ -10,6 +10,8 @@ import com.khapara.productservice.dtos.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,16 +87,33 @@ public class CartService {
         cartRep.delete(cart);
     }
 
-    public OrderPricesDTO calculateOrderPrices(List<CartScreenDTO> cartScreenDTOS) {
-        double subtotal = cartScreenDTOS.stream()
-                .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                .sum();
+    public static OrderPricesDTO calculateOrderPrices(List<CartScreenDTO> cartScreenDTOS) {
+        // subtotal = sum(price * quantity)
+        BigDecimal subtotal = cartScreenDTOS.stream()
+                .map(item -> BigDecimal.valueOf(item.getPrice())
+                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        double deliveryFee = (subtotal > 100 || subtotal == 0) ? 0 : 40;
-        double marketPlaceFee = (subtotal == 0) ? 0 : 5;
-        double total = Math.round(subtotal + deliveryFee + marketPlaceFee);
+        // deliveryFee = 0 if subtotal > 100 or subtotal == 0, else 40
+        BigDecimal deliveryFee = (subtotal.compareTo(BigDecimal.valueOf(100)) > 0 || subtotal.compareTo(BigDecimal.ZERO) == 0)
+                ? BigDecimal.ZERO
+                : BigDecimal.valueOf(40);
 
-        return new OrderPricesDTO(subtotal, deliveryFee, marketPlaceFee, total);
+        // marketplaceFee = 0 if subtotal == 0, else 5
+        BigDecimal marketPlaceFee = (subtotal.compareTo(BigDecimal.ZERO) == 0)
+                ? BigDecimal.ZERO
+                : BigDecimal.valueOf(5);
+
+        // total = subtotal + deliveryFee + marketplaceFee
+        BigDecimal total = subtotal.add(deliveryFee).add(marketPlaceFee)
+                .setScale(2, RoundingMode.HALF_UP);
+
+        return new OrderPricesDTO(
+                subtotal.setScale(2, RoundingMode.HALF_UP),
+                deliveryFee.setScale(2, RoundingMode.HALF_UP),
+                marketPlaceFee.setScale(2, RoundingMode.HALF_UP),
+                total
+        );
     }
 
 

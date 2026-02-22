@@ -1,8 +1,8 @@
 package com.khapara.orderservice.controllers;
 
-import com.khapara.orderservice.dtos.CartDTO;
-import com.khapara.orderservice.dtos.CartItemAndPriceDTO;
-import com.khapara.orderservice.dtos.UpdateQuantityDTO;
+import com.khapara.orderservice.dtos.cart.CartDTO;
+import com.khapara.orderservice.dtos.cart.CartItemAndPriceDTO;
+import com.khapara.orderservice.dtos.cart.UpdateQuantityDTO;
 import com.khapara.orderservice.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.khapara.orderservice.dtos;
+package com.khapara.orderservice.dtos.cart;
 
 import lombok.Data;
 

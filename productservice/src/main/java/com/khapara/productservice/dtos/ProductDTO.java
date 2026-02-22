@@ -14,7 +14,7 @@ public class ProductDTO {
     private String groupId;
     private String productBrand;
     private String productTagline;
-    private Double productPrice;
+    private long productPrice;
     private Integer productStock;
     private String productColorName;
     private String productColorHex;

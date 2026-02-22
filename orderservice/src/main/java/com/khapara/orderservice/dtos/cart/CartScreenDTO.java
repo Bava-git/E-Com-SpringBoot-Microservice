@@ -1,4 +1,4 @@
-package com.khapara.orderservice.dtos;
+package com.khapara.orderservice.dtos.cart;
 
 import lombok.Data;
 
@@ -10,10 +10,10 @@ public class CartScreenDTO {
     private Long userId;
     private Long productId;
     private String name;
-    private Double price;
+    private long price;
     private String image;
     private String color;
     private String size;
     private Integer quantity;
-    
+
 }

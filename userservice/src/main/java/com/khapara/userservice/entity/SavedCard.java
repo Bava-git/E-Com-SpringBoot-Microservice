@@ -1,26 +1,21 @@
 package com.khapara.userservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Data;
-import org.aspectj.lang.annotation.After;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.YearMonth;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class CardDetails {
+public class SavedCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

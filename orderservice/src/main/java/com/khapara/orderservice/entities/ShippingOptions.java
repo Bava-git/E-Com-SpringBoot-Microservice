@@ -8,13 +8,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Table(name = "shipping_options")
-public class ShipOptions {
+public class ShippingOptions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private double price;
+    private int price;
     private int eta;
     private boolean isPopular;
 

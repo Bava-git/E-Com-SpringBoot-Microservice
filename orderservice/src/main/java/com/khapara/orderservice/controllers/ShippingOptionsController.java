@@ -1,7 +1,7 @@
 package com.khapara.orderservice.controllers;
 
-import com.khapara.orderservice.dtos.ShipOptionsDTO;
-import com.khapara.orderservice.repositories.ShipOptionsRepository;
+import com.khapara.orderservice.dtos.ShippingOptionsDTO;
+import com.khapara.orderservice.repositories.ShippingOptionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +12,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order/checkout/shippingOptions")
-public class ShipOptionsController {
+public class ShippingOptionsController {
 
     @Autowired
-    private ShipOptionsRepository shipOptionsRep;
+    private ShippingOptionsRepository shipOptionsRep;
 
     @GetMapping
-    public List<ShipOptionsDTO> listShippingOptions() {
+    public List<ShippingOptionsDTO> listShippingOptions() {
         return shipOptionsRep.findAll().stream()
                 .map(option -> {
-                    ShipOptionsDTO dto = new ShipOptionsDTO();
+                    ShippingOptionsDTO dto = new ShippingOptionsDTO();
                     dto.setId(option.getId());
                     dto.setName(option.getName());
                     dto.setPrice(option.getPrice());

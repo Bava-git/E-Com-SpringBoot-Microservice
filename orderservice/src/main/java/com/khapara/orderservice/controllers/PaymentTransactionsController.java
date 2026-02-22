@@ -1,6 +1,7 @@
 package com.khapara.orderservice.controllers;
 
-import com.khapara.orderservice.dtos.PaymentTransactionsDTO;
+import com.khapara.orderservice.dtos.paymentTransactions.PaymentTransactionsDTO;
+import com.khapara.orderservice.dtos.paymentTransactions.ResPaymentTransactionsDTO;
 import com.khapara.orderservice.services.PaymentTransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class PaymentTransactionsController {
     private PaymentTransactionsService paymentTransactionsSer;
 
     @PostMapping
-    public ResponseEntity<PaymentTransactionsDTO> savePaymentTransactions(@RequestBody PaymentTransactionsDTO dto) {
-        PaymentTransactionsDTO paymentTransactionsDTO = paymentTransactionsSer.savePaymentTransactions(dto);
-        return ResponseEntity.ok(paymentTransactionsDTO);
+    public ResponseEntity<ResPaymentTransactionsDTO> savePaymentTransactions(@RequestBody PaymentTransactionsDTO dto) {
+        ResPaymentTransactionsDTO resPaymentTransactionsDTO = paymentTransactionsSer.savePaymentTransactions(dto);
+        return ResponseEntity.ok(resPaymentTransactionsDTO);
     }
 
 }

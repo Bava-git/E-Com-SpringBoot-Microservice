@@ -7,7 +7,7 @@ import com.khapara.orderservice.repositories.ItemTrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class ItemTrackingService {
@@ -17,10 +17,10 @@ public class ItemTrackingService {
     @Autowired
     private ItemTrackingMapper itemTrackingMapper;
 
-    public ItemTrackingDTO saveItemTracking(ItemTrackingDTO dto) {
-        ItemTracking itemTracking = itemTrackingMapper.toEntity(dto);
-        itemTracking = itemTrackingRep.save(itemTracking);
-        return itemTrackingMapper.toDto(itemTracking);
+    public List<ItemTrackingDTO> saveItemTracking(List<ItemTrackingDTO> dto) {
+        List<ItemTracking> itemTracking = dto.stream().map(itemTrackingMapper::toEntity).toList();
+        itemTracking = itemTrackingRep.saveAll(itemTracking);
+        return itemTracking.stream().map(itemTrackingMapper::toDto).toList();
     }
 
 }

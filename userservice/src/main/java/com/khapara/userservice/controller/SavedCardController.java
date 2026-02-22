@@ -1,8 +1,8 @@
 package com.khapara.userservice.controller;
 
-import com.khapara.userservice.dto.CardDetailsDTO;
+import com.khapara.userservice.dto.SavedCardDTO;
 import com.khapara.userservice.dto.UpdateDefaultCardDTO;
-import com.khapara.userservice.service.CardDetailsService;
+import com.khapara.userservice.service.SavedCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +12,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/auth/private/cardDetails")
-public class CardDetailsController {
+public class SavedCardController {
 
     @Autowired
-    private CardDetailsService cardDetailsSer;
+    private SavedCardService cardDetailsSer;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<CardDetailsDTO>> listCardDetailsByUserid(@PathVariable Long userId) {
-        List<CardDetailsDTO> dtos = cardDetailsSer.listCardDetails(userId);
+    public ResponseEntity<List<SavedCardDTO>> listCardDetailsByUserid(@PathVariable Long userId) {
+        List<SavedCardDTO> dtos = cardDetailsSer.listCardDetails(userId);
         return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<CardDetailsDTO> saveCart(@RequestBody CardDetailsDTO cardDetailsDTO) {
-        CardDetailsDTO dto = cardDetailsSer.saveCardDetails(cardDetailsDTO);
+    public ResponseEntity<SavedCardDTO> saveCart(@RequestBody SavedCardDTO cardDetailsDTO) {
+        SavedCardDTO dto = cardDetailsSer.saveCardDetails(cardDetailsDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 

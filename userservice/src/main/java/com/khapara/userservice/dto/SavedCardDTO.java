@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class CardDetailsDTO {
+public class SavedCardDTO {
 
     private Long id;
     private String last4Digits;

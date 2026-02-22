@@ -1,9 +1,16 @@
-package com.khapara.userservice.entity;
+package com.khapara.orderservice.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -43,21 +50,19 @@ public class ShippingAddress {
     @Size(min = 1, max = 200, message = "nearByLandmark 200 characters limited")
     private String nearByLandmark;
 
-    @Column(nullable = true)
     @Email
-    @Size(max = 200, message = "alternateEmail 200 characters limited")
-    private String alternateEmail;
+    @Size(max = 200, message = "email 200 characters limited")
+    private String email;
 
-    @Column(nullable = true)
-    @Size(min = 10, max = 15, message = "alternatePhoneNumber b/w 10 to 15 characters limited")
+    @Size(min = 10, max = 15, message = "phoneNumber b/w 10 to 15 characters limited")
     @Pattern(regexp = "\\d+")
-    private String alternatePhoneNumber;
+    private String phoneNumber;
 
-    @NotBlank(message = "addressLabel is required")
-    @Size(min = 1, max = 10, message = "addressLabel b/w 1 to 10 characters limited")
-    private String addressLabel;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
-    @NotNull(message = "User id is required")
-    private Long userId;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
 }

@@ -3,7 +3,7 @@ package com.khapara.userservice.dto;
 import lombok.Data;
 
 @Data
-public class ShipAddDTO {
+public class SavedAddressDTO {
 
     private Long id;
     private String fullName;

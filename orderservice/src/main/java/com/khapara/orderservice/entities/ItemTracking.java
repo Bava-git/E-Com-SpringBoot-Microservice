@@ -2,10 +2,7 @@ package com.khapara.orderservice.entities;
 
 import com.khapara.orderservice.entities.erum.TrackingStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,8 +20,8 @@ public class ItemTracking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "generalItemTackingId is required")
-    @Size(max = 40, message = "generalItemTackingId limited to 40 characters")
+    @NotBlank(message = "uniqueItemTrackingId is required")
+    @Size(max = 40, message = "uniqueItemTrackingId limited to 40 characters")
     private String uniqueItemTrackingId;
 
     @Enumerated(EnumType.STRING)
@@ -34,9 +31,23 @@ public class ItemTracking {
     @NotNull(message = "orderId is required")
     private Long orderId;
 
+    @NotNull(message = "eta must not be null")
+    @FutureOrPresent(message = "eta must be in the present or future")
+    private LocalDateTime eta;
+
+    private LocalDateTime ata;
+
+    @Positive
+    @NotNull(message = "paymentTransactionsId is required")
+    private Long paymentTransactionsId;
+
     @Positive
     @NotNull(message = "productId is required")
     private Long productId;
+
+    @Positive(message = "quantity must be greater than 0")
+    @NotNull(message = "quantity is required")
+    private Integer quantity;
 
     @Positive
     @NotNull(message = "sizeId is required")
@@ -48,7 +59,7 @@ public class ItemTracking {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime orderDate;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;

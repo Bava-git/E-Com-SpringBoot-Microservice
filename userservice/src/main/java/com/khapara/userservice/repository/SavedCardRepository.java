@@ -1,6 +1,6 @@
 package com.khapara.userservice.repository;
 
-import com.khapara.userservice.entity.CardDetails;
+import com.khapara.userservice.entity.SavedCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CardDetailsRepository extends JpaRepository<CardDetails, Long> {
-    List<CardDetails> findByUserId(Long userId);
+public interface SavedCardRepository extends JpaRepository<SavedCard, Long> {
+    List<SavedCard> findByUserId(Long userId);
 
-    Optional<CardDetails> findByIdAndUserId(Long id, Long userId);
+    Optional<SavedCard> findByIdAndUserId(Long id, Long userId);
 
     boolean existsByIdAndUserId(Long id, Long userId);
 

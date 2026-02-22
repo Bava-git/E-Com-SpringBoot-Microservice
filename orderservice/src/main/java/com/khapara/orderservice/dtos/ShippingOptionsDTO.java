@@ -3,11 +3,11 @@ package com.khapara.orderservice.dtos;
 import lombok.Data;
 
 @Data
-public class ShipOptionsDTO {
+public class ShippingOptionsDTO {
 
     private Long id;
     private String name;
-    private double price;
+    private int price;
     private String eta;
     private boolean isPopular;
 

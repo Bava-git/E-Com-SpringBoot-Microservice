@@ -1,6 +1,7 @@
 package com.khapara.orderservice.mappers;
 
-import com.khapara.orderservice.dtos.PaymentTransactionsDTO;
+import com.khapara.orderservice.dtos.paymentTransactions.PaymentTransactionsDTO;
+import com.khapara.orderservice.dtos.paymentTransactions.ResPaymentTransactionsDTO;
 import com.khapara.orderservice.entities.PaymentTransactions;
 import org.mapstruct.Mapper;
 
@@ -11,5 +12,5 @@ public interface PaymentTransactionsMapper {
 
     PaymentTransactionsDTO toDto(PaymentTransactions paymentTransactions);
 
-
+    ResPaymentTransactionsDTO toResDto(PaymentTransactions paymentTransactions);
 }

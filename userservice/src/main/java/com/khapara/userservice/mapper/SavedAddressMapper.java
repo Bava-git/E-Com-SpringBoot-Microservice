@@ -1,14 +1,14 @@
 package com.khapara.userservice.mapper;
 
-import com.khapara.userservice.dto.ShipAddDTO;
-import com.khapara.userservice.entity.ShippingAddress;
+import com.khapara.userservice.dto.SavedAddressDTO;
+import com.khapara.userservice.entity.SavedAddress;
 
-public class ShipAddMapper {
+public class SavedAddressMapper {
 
-    public static ShippingAddress toEntity(ShipAddDTO addressDTO) {
+    public static SavedAddress toEntity(SavedAddressDTO addressDTO) {
         if (addressDTO == null) return null;
 
-        ShippingAddress address = new ShippingAddress();
+        SavedAddress address = new SavedAddress();
 
         address.setId(addressDTO.getId());
         address.setFullName(addressDTO.getFullName());
@@ -26,10 +26,10 @@ public class ShipAddMapper {
          return address;
     }
 
-    public static ShipAddDTO toDto(ShippingAddress address) {
+    public static SavedAddressDTO toDto(SavedAddress address) {
         if (address == null) return null;
 
-        ShipAddDTO addressDTO = new ShipAddDTO();
+        SavedAddressDTO addressDTO = new SavedAddressDTO();
 
         addressDTO.setId(address.getId());
         addressDTO.setFullName(address.getFullName());

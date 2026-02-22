@@ -1,6 +1,7 @@
 package com.khapara.orderservice.controllers;
 
-import com.khapara.orderservice.dtos.PromoCodeDTO;
+import com.khapara.orderservice.dtos.promocode.ResPromoCodeDTO;
+import com.khapara.orderservice.dtos.promocode.CheckPromoCodeDTO;
 import com.khapara.orderservice.services.PromoCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class PromoCodeController {
     private PromoCodeService promoCodeSer;
 
     @PostMapping
-    public ResponseEntity<Double> applyPromoCode(@RequestBody PromoCodeDTO dto) {
-        double discountedPrice = promoCodeSer.applyPromoCode(dto);
-        return ResponseEntity.ok(discountedPrice);
+    public ResponseEntity<ResPromoCodeDTO> applyPromoCode(@RequestBody CheckPromoCodeDTO dto) {
+        ResPromoCodeDTO resPromoCodeDTO = promoCodeSer.applyPromoCode(dto);
+        return ResponseEntity.ok(resPromoCodeDTO);
     }
 
 }

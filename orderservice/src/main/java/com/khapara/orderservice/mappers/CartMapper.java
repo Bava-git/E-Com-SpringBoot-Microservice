@@ -1,8 +1,8 @@
 package com.khapara.orderservice.mappers;
 
-import com.khapara.orderservice.dtos.CartDTO;
-import com.khapara.orderservice.dtos.CartScreenDTO;
-import com.khapara.orderservice.dtos.UpdateQuantityDTO;
+import com.khapara.orderservice.dtos.cart.CartDTO;
+import com.khapara.orderservice.dtos.cart.CartScreenDTO;
+import com.khapara.orderservice.dtos.cart.UpdateQuantityDTO;
 import com.khapara.orderservice.entities.Cart;
 import com.khapara.productservice.dtos.ProductDTO;
 import com.khapara.productservice.dtos.ProductSizeDTO;

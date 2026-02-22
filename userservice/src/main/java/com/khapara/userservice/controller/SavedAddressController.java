@@ -1,7 +1,7 @@
 package com.khapara.userservice.controller;
 
-import com.khapara.userservice.dto.ShipAddDTO;
-import com.khapara.userservice.service.ShipAddService;
+import com.khapara.userservice.dto.SavedAddressDTO;
+import com.khapara.userservice.service.SavedAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,26 +11,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/auth/private/address")
-public class ShipAddController {
+public class SavedAddressController {
 
     @Autowired
-    private ShipAddService shipAddSer;
+    private SavedAddressService shipAddSer;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<ShipAddDTO>> listAddress(@PathVariable Long userId) {
-        List<ShipAddDTO> dtos = shipAddSer.listAddress(userId);
+    public ResponseEntity<List<SavedAddressDTO>> listAddress(@PathVariable Long userId) {
+        List<SavedAddressDTO> dtos = shipAddSer.listAddress(userId);
         return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<ShipAddDTO> saveAddress(@RequestBody ShipAddDTO addressDTO) {
-        ShipAddDTO dtos = shipAddSer.saveAddress(addressDTO);
+    public ResponseEntity<SavedAddressDTO> saveAddress(@RequestBody SavedAddressDTO addressDTO) {
+        SavedAddressDTO dtos = shipAddSer.saveAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(dtos);
     }
 
     @PutMapping
-    public ResponseEntity<ShipAddDTO> updateAddress(@RequestBody ShipAddDTO addressDTO){
-        ShipAddDTO dto = shipAddSer.updateAddress(addressDTO);
+    public ResponseEntity<SavedAddressDTO> updateAddress(@RequestBody SavedAddressDTO addressDTO){
+        SavedAddressDTO dto = shipAddSer.updateAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
     }
 
